@@ -6,7 +6,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const PAGE_ACCESS_TOKEN = "DÁN_PAGE_TOKEN_VÔ_ĐÂY";
+const PAGE_ACCESS_TOKEN = "EAAVZBaK9asvYBRpUqIKVJ1yDwnK9ZB83c5vfDpFTzMlcxNB6JIxBVrKvfeAxP9j3ZBvx8ScKR7dEJ0z28jCodCBb8SWlwX2mHfbrrxQ7U0CI6DTRZC5e3aWAlfPzHYf3kefI02M8idW5hDmVssi6quGCeZBvIy0ZAdWer3loePZCjpFarzWELnIy2jfmLg6F1RRR3LVXfIm4ObpxBytgftHSvvGP5hpCUjAotZAB";
 
 app.get("/", (req, res) => {
   res.send("VPKILL BOT ONLINE");
