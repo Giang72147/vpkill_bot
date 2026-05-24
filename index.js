@@ -6,14 +6,12 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const PAGE_ACCESS_TOKEN = "DÁN_TOKEN_PAGE_VÔ_ĐÂY";EAAVZBaK9asvYBRjzoZABlbWZAo20XFuiUeqgM4TutcS1h7vyBwc9eAXTzLDUNvhJzZCZAlccgCDZC1Flu1KNpcpZALTzZBUOzNKvXZBcAC8wlVgsD5Gn3ZAaQlZASQVkzZCA3fgkXJZA9d2EKEif33MNXZCrXX02CmZBbIWBiua7B00tCmG0YAsU2fZAfQs3owDWmbuwArYnUJxudAjRDQp2KDSuMsUCAqmcKZBgGA5Expln7
+const PAGE_ACCESS_TOKEN = "EAAVZBaK9asvYBRjzoZABlbWZAo20XFuiUeqgM4TutcS1h7vyBwc9eAXTzLDUNvhJzZCZAlccgCDZC1Flu1KNpcpZALTzZBUOzNKvXZBcAC8wlVgsD5Gn3ZAaQlZASQVkzZCA3fgkXJZA9d2EKEif33MNXZCrXX02CmZBbIWBiua7B00tCmG0YAsU2fZAfQs3owDWmbuwArYnUJxudAjRDQp2KDSuMsUCAqmcKZBgGA5Expln7";
 
-// TEST
 app.get("/", (req, res) => {
   res.send("VPKILL BOT ONLINE");
 });
 
-// WEBHOOK
 app.post("/webhook", async (req, res) => {
 
   const body = req.body;
@@ -24,12 +22,10 @@ app.post("/webhook", async (req, res) => {
 
       const webhook_event = entry.messaging[0];
 
-      // USER NHẮN TIN
       if (webhook_event.message) {
 
         const sender_psid = webhook_event.sender.id;
 
-        // gửi ảnh
         await callSendAPI(sender_psid, {
           attachment: {
             type: "image",
@@ -39,31 +35,8 @@ app.post("/webhook", async (req, res) => {
           }
         });
 
-        // gửi text
         await callSendAPI(sender_psid, {
           text: "💜 Chào mừng bạn đến với box VPKILL"
-        });
-
-      }
-
-      // USER VÀO BOX
-      if (webhook_event.member_joined) {
-
-        const sender_psid = webhook_event.sender.id;
-
-        // gửi ảnh welcome
-        await callSendAPI(sender_psid, {
-          attachment: {
-            type: "image",
-            payload: {
-              url: "https://i.imgur.com/1X4hX9x.jpeg"
-            }
-          }
-        });
-
-        // gửi text welcome
-        await callSendAPI(sender_psid, {
-          text: "✨ Chào mừng thành viên mới đến với VPKILL"
         });
 
       }
@@ -78,16 +51,15 @@ app.post("/webhook", async (req, res) => {
 
 });
 
-// VERIFY WEBHOOK
 app.get("/webhook", (req, res) => {
 
   const VERIFY_TOKEN = "vpkill_verify";
 
-  let mode = req.query["hub.mode"];
-  let token = req.query["hub.verify_token"];
-  let challenge = req.query["hub.challenge"];
+  const mode = req.query["hub.mode"];
+  const token = req.query["hub.verify_token"];
+  const challenge = req.query["hub.challenge"];
 
-  if (mode && token === VERIFY_TOKEN) {
+  if (mode && token) {
 
     if (token === VERIFY_TOKEN) {
       res.status(200).send(challenge);
@@ -99,7 +71,6 @@ app.get("/webhook", (req, res) => {
 
 });
 
-// SEND API
 async function callSendAPI(sender_psid, response) {
 
   await axios.post(
