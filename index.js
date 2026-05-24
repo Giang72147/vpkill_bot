@@ -8,10 +8,12 @@ app.use(bodyParser.json());
 
 const PAGE_ACCESS_TOKEN = "EAAVZBaK9asvYBRjzoZABlbWZAo20XFuiUeqgM4TutcS1h7vyBwc9eAXTzLDUNvhJzZCZAlccgCDZC1Flu1KNpcpZALTzZBUOzNKvXZBcAC8wlVgsD5Gn3ZAaQlZASQVkzZCA3fgkXJZA9d2EKEif33MNXZCrXX02CmZBbIWBiua7B00tCmG0YAsU2fZAfQs3owDWmbuwArYnUJxudAjRDQp2KDSuMsUCAqmcKZBgGA5Expln7";
 
+// TEST
 app.get("/", (req, res) => {
   res.send("VPKILL BOT ONLINE");
 });
 
+// WEBHOOK
 app.post("/webhook", async (req, res) => {
 
   const body = req.body;
@@ -22,21 +24,24 @@ app.post("/webhook", async (req, res) => {
 
       const webhook_event = entry.messaging[0];
 
+      // USER NHẮN TIN
       if (webhook_event.message) {
 
         const sender_psid = webhook_event.sender.id;
 
+        // GỬI ẢNH
         await callSendAPI(sender_psid, {
           attachment: {
             type: "image",
             payload: {
-              url: "https://i.imgur.com/1X4hX9x.jpeg"
+              url: "https://placehold.co/600x400/png"
             }
           }
         });
 
+        // GỬI TEXT
         await callSendAPI(sender_psid, {
-          text: "💜 Chào mừng bạn đến với box VPKILL"
+          text: "💜 Chào mừng bạn đã đến box VPKILL"
         });
 
       }
@@ -51,6 +56,7 @@ app.post("/webhook", async (req, res) => {
 
 });
 
+// VERIFY
 app.get("/webhook", (req, res) => {
 
   const VERIFY_TOKEN = "vpkill_verify";
@@ -71,6 +77,7 @@ app.get("/webhook", (req, res) => {
 
 });
 
+// SEND API
 async function callSendAPI(sender_psid, response) {
 
   await axios.post(
