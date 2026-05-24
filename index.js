@@ -6,12 +6,14 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const PAGE_ACCESS_TOKEN = "EAAVZBaK9asvYBRpUqIKVJ1yDwnK9ZB83c5vfDpFTzMlcxNB6JIxBVrKvfeAxP9j3ZBvx8ScKR7dEJ0z28jCodCBb8SWlwX2mHfbrrxQ7U0CI6DTRZC5e3aWAlfPzHYf3kefI02M8idW5hDmVssi6quGCeZBvIy0ZAdWer3loePZCjpFarzWELnIy2jfmLg6F1RRR3LVXfIm4ObpxBytgftHSvvGP5hpCUjAotZAB";
+const PAGE_ACCESS_TOKEN = "DÁN_TOKEN_PAGE_VÔ_ĐÂY";EAAVZBaK9asvYBRjzoZABlbWZAo20XFuiUeqgM4TutcS1h7vyBwc9eAXTzLDUNvhJzZCZAlccgCDZC1Flu1KNpcpZALTzZBUOzNKvXZBcAC8wlVgsD5Gn3ZAaQlZASQVkzZCA3fgkXJZA9d2EKEif33MNXZCrXX02CmZBbIWBiua7B00tCmG0YAsU2fZAfQs3owDWmbuwArYnUJxudAjRDQp2KDSuMsUCAqmcKZBgGA5Expln7
 
+// TEST
 app.get("/", (req, res) => {
   res.send("VPKILL BOT ONLINE");
 });
 
+// WEBHOOK
 app.post("/webhook", async (req, res) => {
 
   const body = req.body;
@@ -27,10 +29,21 @@ app.post("/webhook", async (req, res) => {
 
         const sender_psid = webhook_event.sender.id;
 
-        // reply text
+        // gửi ảnh
+        await callSendAPI(sender_psid, {
+          attachment: {
+            type: "image",
+            payload: {
+              url: "https://i.imgur.com/1X4hX9x.jpeg"
+            }
+          }
+        });
+
+        // gửi text
         await callSendAPI(sender_psid, {
           text: "💜 Chào mừng bạn đến với box VPKILL"
         });
+
       }
 
       // USER VÀO BOX
@@ -38,10 +51,23 @@ app.post("/webhook", async (req, res) => {
 
         const sender_psid = webhook_event.sender.id;
 
+        // gửi ảnh welcome
+        await callSendAPI(sender_psid, {
+          attachment: {
+            type: "image",
+            payload: {
+              url: "https://i.imgur.com/1X4hX9x.jpeg"
+            }
+          }
+        });
+
+        // gửi text welcome
         await callSendAPI(sender_psid, {
           text: "✨ Chào mừng thành viên mới đến với VPKILL"
         });
+
       }
+
     }
 
     res.status(200).send("EVENT_RECEIVED");
@@ -49,8 +75,10 @@ app.post("/webhook", async (req, res) => {
   } else {
     res.sendStatus(404);
   }
+
 });
 
+// VERIFY WEBHOOK
 app.get("/webhook", (req, res) => {
 
   const VERIFY_TOKEN = "vpkill_verify";
@@ -66,9 +94,12 @@ app.get("/webhook", (req, res) => {
     } else {
       res.sendStatus(403);
     }
+
   }
+
 });
 
+// SEND API
 async function callSendAPI(sender_psid, response) {
 
   await axios.post(
@@ -80,6 +111,7 @@ async function callSendAPI(sender_psid, response) {
       message: response
     }
   );
+
 }
 
 const PORT = process.env.PORT || 10000;
